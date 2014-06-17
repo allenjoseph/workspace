@@ -1,0 +1,41 @@
+{% extends 'layout.html' %}
+
+{%block page-main%}
+<h2>
+  	<span>{{ user.name }}</span>
+</h2>
+<hr/>
+<div>
+	<div class="chat-posts">
+		<ul id="chat-posts">
+		</ul>
+	</div>
+	<hr/>
+	<div>
+		<form>
+			<div class="row collapse">
+				<div class="small-1 large-1 columns">
+	      			<span class="prefix">Yo :</span>
+	    		</div>
+	    		<div class="small-9 large-9 columns">
+	      			<input type="text" placeholder="Ingrese su mensaje...">
+	    		</div>
+		        <div class="small-2 large-2 columns">
+		        	<a href="#" class="button postfix">Send</a>
+		        </div>
+	        </div>
+		</form>
+	</div>
+</div>
+{%endblock%}
+
+{%block page-side%}
+<div class="panel">
+  <h5>Contactos conectados</h5>
+ 	<ul id="chat-users">
+  	{% for person in users %}
+  		<li id="{{ person.profile_id }}">{{ person.name }}</li>
+  	{% endfor %}
+	</ul>   
+</div>
+{%endblock%}

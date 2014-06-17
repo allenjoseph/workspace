@@ -1,0 +1,97 @@
+/** BARRA DE MENU ------------------------------------------------------**/
+.top-bar, .top-bar.expanded {
+    background: #2E0927;
+    border-bottom: #FF8C00 solid 3px;
+} 
+/** MENU ---------------------------------------------------------------**/
+.top-bar-section ul,.top-bar.expanded .title-area {
+    background: transparent;
+} 
+/** ITEM DE MENU -------------------------------------------------------**/
+.top-bar-section ul li{
+	background: transparent;
+}
+.top-bar-section ul li.has-form, 
+.top-bar-section ul li.has-form:hover{
+	background: #2E0927;
+	border-bottom: #FF8C00 solid 3px;
+}
+/** ENLACE DEL ITEM DE MENU -------------------------------------------**/
+.top-bar-section ul li a:not(.button), 
+.top-bar-section ul li:not(.has-form) a:not(.button),
+.top-bar-section .dropdown li:not(.has-form) a:not(.button) {
+    background: transparent;
+}
+.top-bar-section ul li:not(.has-form) a:not(.button):hover,
+.top-bar-section ul.dropdown li a:not(.button):hover {
+	background: #FF8C00;
+}
+.top-bar-section .dropdown,
+.top-bar-section .dropdown:hover {
+    background: #2E0927;
+    color: #fff;
+} 
+.top-bar-section .dropdown li.has-form{
+    padding: 0px;
+}
+.top-bar-section .dropdown li a:not(.button){
+    line-height: 32px;
+}
+/** MAIN ITEM DROPDOWN -----------------------------------------------**/
+.top-bar-section .has-dropdown > a{
+    padding-top: 0;
+    padding-bottom: 0;
+    line-height: 45px;
+}
+.top-bar-section .has-dropdown > a:after {
+    border-color: #FF8C00 transparent transparent;
+}
+.top-bar-section .has-dropdown:hover > a:after {
+    border-color: #2E0927 transparent transparent;
+}
+
+/*=====================================================================*/
+body{
+    background: black;
+}
+header{
+    padding-top: 10px;
+}
+footer{
+    background: #000;
+    min-height: 100px;
+    margin-top: 20px;
+    padding: 20px;
+    color: #ddd;
+}
+footer .page-info{
+    color: #ccc;
+    font-size: 0.8em;
+}
+h2 span{
+    padding: 0 5px;
+}
+h2 span:hover{
+    background: #FFEBD3;
+    color: #000;
+}
+.wrapper{
+    background: #fdfdfd;
+}
+.button-menu{
+    height: 30px;
+    line-height: 30px!important;
+    padding: 0px!important;
+    margin: 3px 0px;
+}
+.chat-posts{
+    border: solid 1px #ccc;
+    min-height: 300px;
+}
+.photo-user-menu{
+    border: 1px dashed #A7A3A3;
+    border-radius: 17px;
+    height: 35px;
+    margin: 4px 5px 3px;
+    vertical-align: top;
+}
