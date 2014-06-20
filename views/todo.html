@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+
+{%block page-main%}
+<h2>
+  	<span>To Do : {{ todos.count() }}</span>
+</h2>
+<hr/>
+<div>
+	<div>
+		<form method="POST" action="/todo/create-todo">
+			<div class="row collapse">
+				<div class="small-1 large-1 columns">
+	      			<span class="prefix">ToDo</span>
+	    		</div>
+	    		<div class="small-9 large-9 columns">
+	      			<input type="text" name="task" placeholder="Ingrese su tarea...">
+	    		</div>
+		        <div class="small-2 large-2 columns">
+		        	<input type="submit" class="button postfix" value="Send"/>
+		        </div>
+	        </div>
+		</form>
+	</div>
+	<hr/>
+	<div class="todo-list">
+		<ul id="todo-list">
+			{% for todo in todos %}
+				<li> 
+					<input type="checkbox" name="complete" value="Car" {% if todo.complete %} checked {% endif %}>
+					<span>{{ todo.task }}</span>
+					<a href="/todo/delete-todo/{{ todo._id.valueOf() }}"><i class="fa fa-trash-o"></i></a>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>
+{%endblock%}
+
+{%block page-side%}
+<div class="panel">
+  <h5>Compartir ToDo</h5>
+ 	<ul id="chat-users">
+  	{% for person in users %}
+  		<li id="{{ person._id.valueOf() }}">{{ person.name }}</li>
+  	{% endfor %}
+	</ul>   
+</div>
+{%endblock%}
