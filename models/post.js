@@ -1,5 +1,5 @@
-var models = require('./models');
-var Schema = models.Schema;
+var models = require('./models'),
+	Schema = models.Schema;
 
 var PostSchema = new Schema({
     content: String,

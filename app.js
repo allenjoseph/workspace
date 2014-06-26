@@ -40,21 +40,27 @@ passport.deserializeUser(function(obj, done) {
     done(null, obj);
 });
 
-/* Controllers ===================================*/
+/* Controllers ------------------------------------*/
+var authController = require('./controllers/auth');
 var homeController = require('./controllers/home');
-var connectionsController = require('./controllers/connections');
+var dataController = require('./controllers/data');
+var chatController = require('./controllers/chat');
+var todoController = require('./controllers/todo');
 
-homeController(app, users);
-connectionsController(app);
+authController(app);
+homeController(app);
+dataController(app);
+chatController(app);
+todoController(app);
 
-/* Connections ===================================*/
-var googleConnection = require('./connections/google');
-var twitterConnection = require('./connections/twitter');
+/* Connections ------------------------------------*/
+var googleAuth = require('./auths/google');
+var twitterAuth = require('./auths/twitter');
 
-googleConnection(app);
-twitterConnection(app);
+googleAuth(app);
+twitterAuth(app);
 
-/* ===============================================*/
+/*-------------------------------------------------*/
 
 app.listen(3000,function(){
     console.log("Workspace running on port : 3000");

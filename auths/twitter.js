@@ -15,7 +15,7 @@ var twitterConnection = function(app){
     }, function(accessToken, refreshToken, profile, done) {
 
         //Buscamos al usuario en nuestra base
-        User.findOne({ id : profile.id, provider : profile.provider }, function(err, user) {
+        User.findOne({ provider_id : profile.id, provider : profile.provider }, function(err, user) {
 
             if(err) throw(err);
 
@@ -24,7 +24,7 @@ var twitterConnection = function(app){
 
             //creamos el nuevo usuario
             var user = new User({
-                id: profile.id,
+                provider_id: profile.id,
                 provider: profile.provider,
                 name: profile.displayName,
                 photo: profile.photos[0].value

@@ -5,7 +5,7 @@ var authController = function(app){
 	// Ruta para autenticarse TWITTER
 	app.get('/auth/twitter', passport.authenticate('twitter'));
 	app.get('/auth/twitter/callback', passport.authenticate('twitter', {
-		successRedirect: '/log-in',
+		successRedirect: '/home',
 		failureRedirect: '/'
 	}));
 
@@ -15,7 +15,7 @@ var authController = function(app){
 	           	'https://www.googleapis.com/auth/userinfo.email'] 
 	}));
 	app.get('/auth/google/return', passport.authenticate('google', {
-		successRedirect: '/log-in',
+		successRedirect: '/home',
 		failureRedirect: '/'
 	}));
 };

@@ -5,11 +5,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>{%block tittle%}Workspace{%endblock%}</title>
 	<link rel="stylesheet" href="css/foundation.css" />
-	<link rel="stylesheet" href="css/workspace.css" />
-	<script src="js/vendor/jquery.js"></script>
-	<script src="js/vendor/modernizr.js"></script>
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/workspace.css" />	
 	<script src="/socket.io/socket.io.js"></script>
-	<script src="js/chat.js"></script>
 	{%block head%}{%endblock%}
 </head>
 <body>
@@ -43,7 +41,8 @@
 								{% if user %}
 									<ul class="dropdown">
 										<li class="has-form">
-											<a href="/chat" class="tiny">Chat</a>
+											<a class="tiny" id="nav-button-chat">Chat</a>
+											<a class="tiny" id="nav-button-todo">ToDo</a>
 											<a href="/log-out" class="button tiny alert button-menu">Logout</a>
 										</li>
 									</ul>
@@ -63,37 +62,91 @@
 	</div>
 
 	<div class="wrapper">
-		<div class="row">
-			<div class="large-12 columns">
-				{%block page-header%}
-					<header>
-						<h1 class="text-center">{{ page.module }}</h1>
-					</header>
-				{%endblock%}
-				<hr/>
+		<div id="page-wrapper">
+			<div class="row">
+				<div class="large-12 columns">
+						<header id="page-header">
+							<h1 class="text-center">{{ page.module }}</h1>
+						</header>
+					<hr/>
+				</div>
+			</div>
+			<div class="row">
+				<section class="large-8 medium-8 columns" id="page-main">
+					{%block page-main%}{%endblock%}
+				</section>
+				<section class="large-4 medium-4 columns" id="page-side">
+					{%block page-side%}{%endblock%}
+				</section>
 			</div>
 		</div>
-		<div class="row">
-			<section class="large-8 medium-8 columns">
-				{%block page-main%}{%endblock%}
-			</section>
-			<section class="large-4 medium-4 columns">
-				{%block page-side%}{%endblock%}
-			</section>
-		</div>
-		<footer>        
+		<footer id="page-footer">        
 			<div class="row">
-				<section class="large-8 medium-8 columns">      
+				<section class="large-8 medium-8 columns">  
 				</section>
 				<section class="large-4 medium-4 columns">
 				</section>
 			</div>
 			<div class="row text-center page-info">Workspace - 2014</div>
 		</footer> 
-	</div>     	
+	</div>
+	{% raw %}
+	<script id="todo-main-template" type="text/template">
+		<div>
+			<div>
+				<form id="todo-form">
+					<div class="row collapse">
+						<div class="small-1 large-1 columns">
+			      			<span class="prefix">ToDo</span>
+			    		</div>
+			    		<div class="small-9 large-9 columns">
+			      			<input type="text" name="task" id="todo-form-task" placeholder="Ingrese su tarea...">
+			    		</div>
+				        <div class="small-2 large-2 columns">
+				        	<buttom class="button postfix" id="todo-form-button">Add</buttom>
+				        </div>
+			        </div>
+				</form>
+			</div>
+			<hr/>
+			<div class="todo-list">
+				<ul id="todo-list">
+				</ul>
+			</div>
+			<hr/>
+		</div>
+	</script>
+	<script id="user-template" type="text/template">
+		<img src="<%= user.photo %>" alt="<%= user.name %>" class="user-photo"/>
+		<span class="user-name"><%= user.name %></span>
+		<span class="user-state"><%= user.online %></span>
+	</script>
+
+	<script id="todo-template" type="text/template">
+		<input data-id="<%= todo.id %>" type="checkbox" class="todo-check" value="Car" <% if ( todo.complete ) { %> checked <% } %>>
+		<span class="todo"><%= todo.task %></span>
+		<span class="save">save</span>
+		<a href="#!" class="todo-delete"><i class="fa fa-trash-o"></i></a>
+	</script>
+	{% endraw %}
+	<script src="js/vendor/jquery.js"></script>
+	<script src="js/vendor/jquery-ui.min.js"></script>
+	<script src="js/vendor/underscore.js"></script>
+	<script src="js/vendor/backbone.js"></script>
+	<script src="js/vendor/modernizr.js"></script>
 	<script src="js/foundation.min.js"></script>
 	<script>
 		$(document).foundation();
 	</script>
+	<script src="js/init.js"></script>
+	<script src="js/backbone/models/user.js"></script>
+	<script src="js/backbone/models/todo.js"></script>
+	<script src="js/backbone/views/user.js"></script>
+	<script src="js/backbone/views/todo.js"></script>
+	<script src="js/backbone/views/main.js"></script>
+	<script src="js/backbone/collections/user.js"></script>
+	<script src="js/backbone/collections/todo.js"></script>
+	<script src="js/backbone/routers/base.js"></script>
+	<script src="js/main.js"></script>
 </body>
 </html>

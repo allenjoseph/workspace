@@ -1,6 +1,7 @@
-var _ = require('underscore');
+var _ = require('underscore'),
+	User = require('../models/user');
 
-var homeController = function(app, users){
+var homeController = function(app){
 
 	var isNotLoggedIn = function(req, res, next){
 		if(!req.session.passport.user){
@@ -18,6 +19,13 @@ var homeController = function(app, users){
 		next();
 	};
 
+	var getUser = function (req, res, next){
+		User.findOne({_id: req.session.passport.user._id}, function(err,user){
+			req.user = user;
+			next();
+		});
+	};
+
 	app.get('/', isLoggedIn, function(req, res) {
 		var content = { 
 			page : { module : 'Welcome' }, 
@@ -26,42 +34,35 @@ var homeController = function(app, users){
 		res.render('index', content );
 	});
 
-	app.get('/log-in', function(req,res){
-		users.push( req.session.passport.user );
-		app.io.broadcast('log-in',{ 			
-			userid : req.session.passport.user.profile_id,
-			username : req.session.passport.user.name
-		});
+	app.get('/home', isNotLoggedIn, function(req, res) {		
+		//Update state of User
+		User.findByIdAndUpdate( req.session.passport.user._id, { $set : { online : true }},	function(err, user){
+			//Notify to all user logged
+			app.io.broadcast('log-in',{ 			
+				user : user.toJSON()
+			});
 
-		res.redirect('/home');
+			var content = { 
+				page : { module : 'Home' }, 
+				user : user.toJSON()
+			};
+
+			res.render('index', content );
+		});
 	});
 
 	app.get('/log-out', function(req, res) {
-		users = _.without( users, req.session.passport.user );
+		User.update( 
+			{ _id : req.session.passport.user._id },
+			{ $set : { online : false }}
+		).exec();
+
 		app.io.broadcast('log-out',{ 			
-			userid : req.session.passport.user.profile_id
+			userid : req.session.passport.user._id.valueOf()
 		});
 
 		req.session.destroy();
 		res.redirect('/');
-	});
-
-	app.get('/home', isNotLoggedIn, function(req, res) {		
-		var content = { 
-			page : { module : 'Home' }, 
-			user : req.session.passport.user,
-			users : users 
-		};
-		res.render('index', content );
-	});
-
-	app.get('/chat', isNotLoggedIn, function(req, res) {
-		var content = { 
-			page : { module : 'Chat' }, 
-			user : req.session.passport.user,
-			users : users 
-		};
-		res.render('chat', content );
 	});
 };
 

@@ -2,7 +2,7 @@ var User = require('../models/user'),
 	ToDo = require('../models/todo'),
 	_ = require('underscore');
 
-var todoController = function(app,users){
+var todoController = function(app){
 
 	var isNotLoggedIn = function(req, res, next){
 		if(!req.session.passport.user){
@@ -19,50 +19,51 @@ var todoController = function(app,users){
 		});
 	};
 
-	app.get('/todo', isNotLoggedIn, function(req, res){
-		ToDo.find({})
-		.exec(function(err, todos){
-			var todosToJson = _.map(todos,function(todo){
-				return todo.toJSON();
-			});
-
-			var content = {
-				page : { module : 'ToDo' },
-				user : req.session.passport.user,
-				users : users,
-				todos : todosToJson
-			};
-
-			res.render('todo', content);
-		});
-	});
-
-	app.post('/todo/create-todo', isNotLoggedIn, getUser, function(req, res){
+	app.post('/todo/create', isNotLoggedIn, getUser, function(req, res){
 		var todo = new ToDo({
 			task : req.body.task,
 			user : req.user
 		});
 
-		todo.save(function(err){
+		todo.save(function(err,todo){
 			if(err){
-				res.send(500,err);
+				res.send({ 'success' : false });
 			}
-
-			app.io.broadcast('todo',{
-				id : todo._id.valueOf(),
-				task : todo.task,
-				user : req.user.toJSON()
+			res.send({ 
+				'success' : true,
+				todo : todo.toJSON() 
 			});
-
-			res.redirect('/todo');
 		});
 	});
 
-	app.get('/todo/delete-todo/:id', isNotLoggedIn, function(req, res){
+	app.post('/todo/delete/:id', isNotLoggedIn, function(req, res){
+		ToDo.findByIdAndRemove(req.params.id)
+		.exec(function(err){
+			if(err){
+				res.send({ 'success' : false });
+			}
+			res.send({ 'success' : true });
+		});
+	});
 
-		ToDo.findByIdAndRemove(req.params.id).exec();
+	app.post('/todo/complete/:id', isNotLoggedIn, function(req, res){
+		ToDo.findByIdAndUpdate(req.params.id, { $set : { complete : true } })
+		.exec(function(err){
+			if(err){
+				res.send({ 'success' : false });
+			}
+			res.send({ 'success' : true });
+		});		
+	});
 
-		res.redirect('/todo');
+	app.post('/todo/incomplete/:id', isNotLoggedIn, function(req, res){
+		ToDo.findByIdAndUpdate(req.params.id, { $set : { complete : false } })
+		.exec(function(err){
+			if(err){
+				res.send({ 'success' : false });
+			}
+			res.send({ 'success' : true });
+		});	
 	});
 };
 

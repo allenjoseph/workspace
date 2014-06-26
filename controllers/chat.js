@@ -2,7 +2,7 @@ var User = require('../models/user'),
 	Post = require('../models/post'),
 	_ = require('underscore');
 
-var homeController = function(app, users){
+var homeController = function(app){
 
 	var isNotLoggedIn = function(req, res, next){
 		if(!req.session.passport.user){
@@ -30,7 +30,6 @@ var homeController = function(app, users){
 			var content = { 
 				page : { module : 'Chat' }, 
 				user : req.session.passport.user,
-				users : users,
 				posts : postsAsJson 
 			};
 			res.render('chat', content );

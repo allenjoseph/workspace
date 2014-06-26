@@ -1,27 +1,26 @@
 {% extends 'layout.html' %}
 
 {%block page-main%}
-<h2>
-  	<span>{{ user.name }}</span>
-</h2>
-<hr/>
 <div>
 	<div class="chat-posts">
 		<ul id="chat-posts">
+			{% for post in posts %}
+				<li><span>{{post.user.name}}</span>: {{post.content}}</li>
+			{% endfor %}
 		</ul>
 	</div>
 	<hr/>
 	<div>
-		<form>
+		<form method="POST" action="/chat/create-post">
 			<div class="row collapse">
 				<div class="small-1 large-1 columns">
-	      			<span class="prefix">Yo :</span>
+	      			<span class="prefix">Yo</span>
 	    		</div>
 	    		<div class="small-9 large-9 columns">
-	      			<input type="text" placeholder="Ingrese su mensaje...">
+	      			<input type="text" name="content" placeholder="Ingrese su mensaje...">
 	    		</div>
 		        <div class="small-2 large-2 columns">
-		        	<a href="#" class="button postfix">Send</a>
+		        	<input type="submit" class="button postfix" value="Send"/>
 		        </div>
 	        </div>
 		</form>
@@ -32,10 +31,7 @@
 {%block page-side%}
 <div class="panel">
   <h5>Contactos conectados</h5>
- 	<ul id="chat-users">
-  	{% for person in users %}
-  		<li id="{{ person.profile_id }}">{{ person.name }}</li>
-  	{% endfor %}
-	</ul>   
+ 	<ul id="chat-users" class="users-list">
+	</ul>
 </div>
 {%endblock%}
