@@ -19,42 +19,30 @@ var homeController = function(app){
 		});
 	};
 
-	app.get('/chat', isNotLoggedIn, function(req, res) {
-		Post.find({})
-		.populate('user')
-		.exec(function(err, posts){
-			var postsAsJson = _.map(posts,function(post){
-				return post.toJSON();
-			});
-
-			var content = { 
-				page : { module : 'Chat' }, 
-				user : req.session.passport.user,
-				posts : postsAsJson 
-			};
-			res.render('chat', content );
-		});		
-	});
-
 	app.post('/chat/create-post',isNotLoggedIn, getUser, function(req,res){
 		var post = new Post({
 			content : req.body.content,
 			user : req.user
 		});
 
-		post.save(function(err){
+		post.save(function(err, post){
 			if(err){
-				res.send(500, err);
+				res.send({ 'success' : false });
 			}
 
-			app.io.broadcast('post', {
-				id : post._id.valueOf(),
-				content : post.content,
-				user : req.user.toJSON()
-			});
+			Post.findById( post._id )
+			.populate('user')
+			.exec(function(err, post){
+				app.io.broadcast('post', {
+					post : post.toJSON()
+				});
 
-			res.redirect('/chat');
-		});
+				res.send({ 
+					'success' : true,
+					post : post.toJSON() 
+				});			
+			});
+		});		
 	});
 };
 

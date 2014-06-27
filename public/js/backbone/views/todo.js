@@ -21,8 +21,6 @@ Workspace.Views.ToDoView = Backbone.View.extend({
 
 	render : function(){
 		var todo = this.model.toJSON();
-
-		this.$el.attr( 'id', todo._id );
 		this.$el.html( this.template( { todo : todo	} ) );
 
 		return this;

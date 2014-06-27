@@ -1,31 +1,7 @@
 {% extends 'layout.html' %}
 
 {%block page-main%}
-<div>
-	<div class="chat-posts">
-		<ul id="chat-posts">
-			{% for post in posts %}
-				<li><span>{{post.user.name}}</span>: {{post.content}}</li>
-			{% endfor %}
-		</ul>
-	</div>
-	<hr/>
-	<div>
-		<form method="POST" action="/chat/create-post">
-			<div class="row collapse">
-				<div class="small-1 large-1 columns">
-	      			<span class="prefix">Yo</span>
-	    		</div>
-	    		<div class="small-9 large-9 columns">
-	      			<input type="text" name="content" placeholder="Ingrese su mensaje...">
-	    		</div>
-		        <div class="small-2 large-2 columns">
-		        	<input type="submit" class="button postfix" value="Send"/>
-		        </div>
-	        </div>
-		</form>
-	</div>
-</div>
+
 {%endblock%}
 
 {%block page-side%}

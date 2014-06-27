@@ -103,7 +103,7 @@
 			      			<input type="text" name="task" id="todo-form-task" placeholder="Ingrese su tarea...">
 			    		</div>
 				        <div class="small-2 large-2 columns">
-				        	<buttom class="button postfix" id="todo-form-button">Add</buttom>
+				        	<button class="button postfix" id="todo-form-button">Add</button>
 				        </div>
 			        </div>
 				</form>
@@ -116,6 +116,31 @@
 			<hr/>
 		</div>
 	</script>
+	<script id="chat-main-template" type="text/template">
+		<div>
+			<div class="chat-posts">
+				<ul id="chat-posts">
+				</ul>
+			</div>
+			<hr/>
+			<div>
+				<form id="post-form">
+					<div class="row collapse">
+						<div class="small-1 large-1 columns">
+			      			<span class="prefix">Yo</span>
+			    		</div>
+			    		<div class="small-9 large-9 columns">
+			      			<input type="text" name="content" id="post-form-msg" placeholder="Ingrese su mensaje...">
+			    		</div>
+				        <div class="small-2 large-2 columns">
+				        	<button class="button postfix" id="post-form-button">Send</button>
+				        </div>
+			        </div>
+				</form>
+			</div>
+		</div>
+	</script>
+
 	<script id="user-template" type="text/template">
 		<img src="<%= user.photo %>" alt="<%= user.name %>" class="user-photo"/>
 		<span class="user-name"><%= user.name %></span>
@@ -124,10 +149,15 @@
 
 	<script id="todo-template" type="text/template">
 		<input data-id="<%= todo.id %>" type="checkbox" class="todo-check" value="Car" <% if ( todo.complete ) { %> checked <% } %>>
-		<span class="todo"><%= todo.task %></span>
+		<span class="task"><%= todo.task %></span>
 		<span class="save">save</span>
 		<a href="#!" class="todo-delete"><i class="fa fa-trash-o"></i></a>
 	</script>
+
+	<script id="post-template" type="text/template">
+		<span><%= post.user.name %></span>: <%= post.content %>
+	</script>
+
 	{% endraw %}
 	<script src="js/vendor/jquery.js"></script>
 	<script src="js/vendor/jquery-ui.min.js"></script>
@@ -141,11 +171,14 @@
 	<script src="js/init.js"></script>
 	<script src="js/backbone/models/user.js"></script>
 	<script src="js/backbone/models/todo.js"></script>
+	<script src="js/backbone/models/post.js"></script>
 	<script src="js/backbone/views/user.js"></script>
 	<script src="js/backbone/views/todo.js"></script>
+	<script src="js/backbone/views/post.js"></script>
 	<script src="js/backbone/views/main.js"></script>
 	<script src="js/backbone/collections/user.js"></script>
 	<script src="js/backbone/collections/todo.js"></script>
+	<script src="js/backbone/collections/post.js"></script>
 	<script src="js/backbone/routers/base.js"></script>
 	<script src="js/main.js"></script>
 </body>

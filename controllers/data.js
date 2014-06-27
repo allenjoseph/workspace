@@ -4,39 +4,43 @@ var User = require('../models/user'),
 
 var dataController = function(app){
 
-	var isNotLoggedIn = function(req, res, next){
-		if(!req.session.passport.user){
-			res.redirect('/');
-			return;
-		}
-		next();
-	};
-
-	app.get('/users', isNotLoggedIn, function(req, res){
-		User.find({ online : true })
-		.exec(function(err,users){
-			usersToJson = _.map(users,function(user){
-				return user.toJSON();
+	app.get('/users', function(req, res){
+		if(req.session.passport.user){
+			User.find({ online : true })
+			.exec(function(err,users){
+				usersToJson = _.map(users,function(user){
+					return user.toJSON();
+				});
+				
+				res.send({
+					users : usersToJson
+				});
 			});
-			
+		}else{
 			res.send({
-				users : usersToJson
+				users : {}
 			});
-		});
+		}
 	});
 
-	app.get('/todos', isNotLoggedIn, function(req, res){
-		ToDo.find({ 'user' : req.session.passport.user._id })
-		.populate('user')
-		.exec(function(err, todos){
-			var todosToJson = _.map(todos,function(todo){
-				return todo.toJSON();
-			});
+	app.get('/todos', function(req, res){
+		if(req.session.passport.user){
+			ToDo.find({ 'user' : req.session.passport.user._id })
+			.populate('user')
+			.exec(function(err, todos){
+				var todosToJson = _.map(todos,function(todo){
+					return todo.toJSON();
+				});
 
-			res.send({
-				todos : todosToJson
+				res.send({
+					todos : todosToJson
+				});
 			});
-		});
+		}else{
+			res.send({
+				todos : {}
+			});
+		}
 	});
 
 };
