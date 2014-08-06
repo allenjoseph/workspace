@@ -14,7 +14,7 @@ var authController = function(app){
 		scope: ['https://www.googleapis.com/auth/plus.me',
 	           	'https://www.googleapis.com/auth/userinfo.email'] 
 	}));
-	app.get('/auth/google/return', passport.authenticate('google', {
+	app.get('/auth/google/callback', passport.authenticate('google', {
 		successRedirect: '/home',
 		failureRedirect: '/'
 	}));

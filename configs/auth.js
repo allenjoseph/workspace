@@ -7,7 +7,7 @@ var auths = {
 	google : {
 		client : '382644572054-niskdgfb01d5q53hjoc30mmpht151epe.apps.googleusercontent.com',
 		secret : '6u2_SHf3Y2HvxZ3-QREXmOh0',
-		callbackURL : 'http://localhost:3000/auth/google/return'
+		callbackURL : '/auth/google/callback'
 	}
 };
 

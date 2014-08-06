@@ -26,3 +26,7 @@ node_modules
 
 #stylus files
 *.styl
+
+configs/auth.js
+
+gulpfile.js
