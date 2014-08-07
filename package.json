@@ -3,6 +3,11 @@
   "version": "0.0.1",
   "description": "Workspace that contains some web applications",
   "author": "Allen Joseph",
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-cssmin": "~0.10.0",
+    "grunt-contrib-uglify": "~0.5.1"
+  },
   "dependencies": {
     "connect-redis": "1.4.7",
     "express": "3.x",
