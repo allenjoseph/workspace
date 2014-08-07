@@ -29,7 +29,8 @@ var homeController = function(app){
 	app.get('/', isLoggedIn, function(req, res) {
 		var content = { 
 			page : { module : 'Welcome' }, 
-			user : null 
+			user : null,
+			env : app.get('env') 
 		};
 		res.render('index', content );
 	});
@@ -44,7 +45,8 @@ var homeController = function(app){
 
 			var content = { 
 				page : { module : 'Home' }, 
-				user : user.toJSON()
+				user : user.toJSON(),
+				env : app.get('env')
 			};
 
 			res.render('index', content );

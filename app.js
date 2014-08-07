@@ -7,8 +7,6 @@ var RedisStore = require('connect-redis')(express);
 var app = express();
 app.http().io();
 
-var users = [];
-
 /* CONFIGURACION DE LAS VISTAS */
 app.engine( 'html', swig.renderFile );
 app.set( 'view engine', 'html' );
@@ -31,7 +29,15 @@ app.configure(function(){
     app.use( passport.session() );
 
     app.use( app.router );  
-})
+});
+
+app.configure('development', function(){
+	app.set('env', 'development');
+});
+
+app.configure('production', function(){
+	app.set('env', 'production');
+});
 
 passport.serializeUser(function(user, done) {
     done(null, user);

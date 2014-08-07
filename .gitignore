@@ -30,3 +30,4 @@ node_modules
 configs/auth.js
 
 gulpfile.js
+Gruntfile.js

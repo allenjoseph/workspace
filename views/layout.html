@@ -5,9 +5,15 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>{%block tittle%}Workspace{%endblock%}</title>
 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+	{% if env == 'development' %}
 	<link rel="stylesheet" href="css/vendor/foundation.css" />	
-	<link rel="stylesheet" href="css/workspace.css" />	
-	
+	<link rel="stylesheet" href="css/app/workspace.css" />
+	{% elseif env == 'production' %}
+	<link rel="stylesheet" href="css/vendor.min.css" />
+	<link rel="stylesheet" href="css/app.min.css" />
+	{% endif %}
+
 	<script src="/socket.io/socket.io.js"></script>
 	{%block head%}{%endblock%}
 </head>
@@ -160,16 +166,14 @@
 	</script>
 
 	{% endraw %}
+
+	{% if env == 'development' %}
 	<script src="js/vendor/jquery.min.js"></script>
 	<script src="js/vendor/jquery-ui.min.js"></script>
-	<script src="js/vendor/modernizr.min.js"></script>
+	<script src="js/vendor/modernizr-latest.js"></script>
 	<script src="js/vendor/foundation.min.js"></script>
 	<script src="js/vendor/underscore.js"></script>
 	<script src="js/vendor/backbone.js"></script>
-
-	<script>
-		$(document).foundation();
-	</script>
 	
 	<script src="js/init.js"></script>
 	<script src="js/backbone/models/user.js"></script>
@@ -184,5 +188,14 @@
 	<script src="js/backbone/collections/post.js"></script>
 	<script src="js/backbone/routers/base.js"></script>
 	<script src="js/main.js"></script>
+	
+	{% elseif env == 'production' %}
+	<script src="js/vendor.min.js"></script>
+	<script src="js/app.min.js"></script>
+	{% endif %}
+	
+	<script>
+		$(document).foundation();
+	</script>	
 </body>
 </html>
